@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    scroll-behavior: smooth;
+}
+
+.header {
+    padding: 1px;
+    padding-top: 30px;
+}
+
+.navbar-nav .nav-link {
+    color: rgb(193, 197, 201);
+    font-size: 0.8rem;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+    word-spacing: 2px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #00b899;
+}
+
+.heading {
+    padding: 30px 20px;
+    font-weight: bold;
+}
+
+.heading h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.heading p {
+    font-size: 0.9rem;
+}
+
+.video-container {
+    width: 40%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.video-container video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.second-page {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.second-page h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.second-page p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.card {
+    display: block;
+    margin: 30px auto;
+    max-width: 300px;
+    background-color: black;
+}
+
+.header2 {
+    padding: 15px 20px;
+}
+
+.header2 h1 {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.header2 p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.bank-logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.video-container2 {
+    width: 40%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.video-container2 video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.c {
+    text-align: center;
+    font-size: smaller;
+}
+
+.img {
+    width: 40px;
+    height: 30px;
+}
+
+.imgs {
+    width: 80px;
+    height: 40px;
+    display: flex;
+}
+
+.b1, .b2, .b3 {
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: small;
+}
+
+.container {
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.pronunciation p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.pronunciation .icon {
+    font-size: 1.5em;
+    margin-left: 5px;
+}
+
+.sounds-like {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sounds-like .sound-item {
+    font-size: 1em;
+    align-items: center;
+    background-color: transparent; 
+    padding: 2px; 
+    margin: 0; 
+}
+
+.contact p {
+    font-size: 1.2em;
+    font-weight: bold;
+    
+}
+
+.contact .contact-options .contact-item {
+    font-size: 1em;
+    padding: 2px 4px;
+}
+
+@media (max-width: 768px) {
+    .pronunciation p, .contact p {
+        font-size: 1em;
+    }
+
+    .sounds-like .sound-item, .contact .contact-options .contact-item {
+        font-size: 0.9em;
+    }
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+    color: #8892b0;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #8892b0;
+}
+
+.footer p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #8892b0;
+}
+
+.footer .disclaimer {
+    font-size: 0.8rem;
+    color: #8892b0;
+}
+
+.footer p:last-child {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #8892b0;
+}
