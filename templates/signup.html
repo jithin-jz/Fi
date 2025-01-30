@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fi | Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981',
+                        'primary-dark': '#059669',
+                        'primary-light': '#D1FAE5',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Content -->
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            
+            
+            <!-- Main Card -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <!-- Tabs -->
+                <div class="flex justify-center space-x-4 mb-8">
+                    <button onclick="showLogin()" id="loginTab" class="px-6 py-2 rounded-lg bg-primary text-white">Login</button>
+                    <button onclick="showSignup()" id="signupTab" class="px-6 py-2 rounded-lg hover:bg-primary-light">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Welcome back!</h2>
+                    <form class="space-y-6" method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="login">
+                        <div>
+                            <input type="text" name="username" placeholder="Enter your username" required 
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <input type="password" name="password" placeholder="Enter your password" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Sign in
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupForm" class="hidden">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Create an account</h2>
+                    <form class="space-y-6" method="POST" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="signup">
+                        <div>
+                            <input type="text" name="username" placeholder="Enter your username" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <input type="password" name="password1" placeholder="Create password" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                        </div>
+                        <div>
+                            <input type="password" name="password2" placeholder="Confirm password" required
+                                class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                        </div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Social Login -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <button class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <i class="fab fa-google"></i>
+                            <span class="ml-2">Continue with Google</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginTab').classList.add('bg-primary', 'text-white');
+            document.getElementById('loginTab').classList.remove('hover:bg-primary-light');
+            document.getElementById('signupTab').classList.remove('bg-primary', 'text-white');
+            document.getElementById('signupTab').classList.add('hover:bg-primary-light');
+        }
+
+        function showSignup() {
+            document.getElementById('signupForm').classList.remove('hidden');
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupTab').classList.add('bg-primary', 'text-white');
+            document.getElementById('signupTab').classList.remove('hover:bg-primary-light');
+            document.getElementById('loginTab').classList.remove('bg-primary', 'text-white');
+            document.getElementById('loginTab').classList.add('hover:bg-primary-light');
+        }
+    </script>
+
+    <!-- Add this right before the closing body tag -->
+    {% if messages %}
+    <div class="fixed bottom-4 right-4">
+        {% for message in messages %}
+        <div class="bg-white border-l-4 {% if message.tags == 'error' %}border-red-500{% else %}border-green-500{% endif %} p-4 mb-4 shadow-lg rounded">
+            <p class="text-gray-700">{{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+</html>

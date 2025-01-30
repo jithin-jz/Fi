@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <main class="max-w-7xl mx-auto px-4 py-6">
+        <div class="bg-white/70 backdrop-blur-xl rounded-2xl shadow-lg border border-indigo-50">
+            <div class="p-6">
+
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    <input type="hidden" name="send_money_submit" value="1">
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Select Recipient</label>
+                        <div class="relative flex items-center">
+                            <button type="button" class="scroll-left p-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg mr-3 hover:opacity-90 transition-opacity">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="flex space-x-3 overflow-x-auto scrollbar-hide pb-2" id="recipient-list">
+                                {% for user in send_money_form.recipient.field.queryset %}
+                                <div class="recipient-item cursor-pointer px-6 py-3 rounded-xl bg-white text-gray-700 font-medium text-sm border border-indigo-100 hover:border-indigo-300 transition-all flex items-center space-x-2" 
+                                    data-user-id="{{ user.id }}" onclick="selectRecipient(this)">
+                                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                                        <i class="fas fa-user text-white text-xs"></i>
+                                    </div>
+                                    <span>{{ user.username }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button type="button" class="scroll-right p-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg ml-3 hover:opacity-90 transition-opacity">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="recipient" id="selected-recipient">
+                        {% if send_money_form.recipient.errors %}
+                        <p class="text-red-500 text-sm mt-2">{{ send_money_form.recipient.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="relative">
+                            <label for="id_amount" class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                                <input type="number" name="amount" id="id_amount" step="0.01" 
+                                    class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="0.00" required>
+                            </div>
+                            {% if send_money_form.amount.errors %}
+                            <p class="text-red-500 text-sm mt-2">{{ send_money_form.amount.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="id_description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <input type="text" name="description" id="id_description" 
+                                class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                placeholder="What's this transfer for?">
+                            {% if send_money_form.description.errors %}
+                            <p class="text-red-500 text-sm mt-2">{{ send_money_form.description.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium py-4 px-6 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center space-x-2">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Send Money</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% if messages %}
+    <div class="fixed bottom-4 right-4">
+        {% for message in messages %}
+        <div class="bg-white border-l-4 {% if message.tags == 'error' %}border-red-500{% else %}border-green-500{% endif %} p-4 mb-4 shadow-lg rounded relative" id="message-{{ forloop.counter }}">
+            <p class="text-gray-700">{{ message }}</p>
+            <button onclick="removeMessage('message-{{ forloop.counter }}')" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                &times;
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<script>
+    function removeMessage(messageId) {
+        const messageElement = document.getElementById(messageId);
+        if (messageElement) {
+            messageElement.style.display = 'none'; // Hide the message
+        }
+    }
+
+    function selectRecipient(element) {
+        document.querySelectorAll('.recipient-item').forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        element.classList.add('selected');
+
+        const userId = element.getAttribute('data-user-id');
+        document.getElementById('selected-recipient').value = userId;
+    }
+
+    document.querySelector('.scroll-left').addEventListener('click', () => {
+        document.getElementById('recipient-list').scrollBy({ left: -200, behavior: 'smooth' });
+    });
+
+    document.querySelector('.scroll-right').addEventListener('click', () => {
+        document.getElementById('recipient-list').scrollBy({ left: 200, behavior: 'smooth' });
+    });
+</script>
+
+<style>
+    .recipient-item.selected {
+        background: linear-gradient(to right, #4f46e5, #7c3aed);
+        color: white;
+        border-color: transparent;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    @media (max-width: 640px) {
+        #recipient-list {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .recipient-item {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .scroll-left, .scroll-right {
+            display: none;
+        }
+    }
+</style>
+
+{% endblock %}
