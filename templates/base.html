@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fi</title>
+    
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Favicon -->
     <link rel="shortcut icon" href="https://miro.medium.com/v2/resize:fit:400/1*1qCzl41x8K7_MHzC5An7hA.png" type="image/x-icon">
+
+    <!-- Smooth Scrolling -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
     <!-- Main Content -->
-        {% block content %}
-        
-        {% endblock %}
+    {% block content %}
+    
+    {% endblock %}
 </body>
 </html>
