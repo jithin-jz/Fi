@@ -22,7 +22,10 @@ staticfiles/
 # Virtual Environment
 venv/
 env/
+
+# Django secret key and environment variables
 .env
+*.env
 
 # macOS
 .DS_Store
